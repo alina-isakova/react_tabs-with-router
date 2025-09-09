@@ -1,8 +1,8 @@
-import { Tabslist } from '../components/TabsList';
+import { TabsList } from '../components/TabsList';
 
 export const TabsPage = () => (
   <>
     <h1 className="title">Tabs page</h1>
-    <Tabslist />
+    <TabsList />
   </>
 );

@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom';
 
 type Props = {};
 
-export const Tabslist: React.FC<Props> = () => {
+export const TabsList: React.FC<Props> = () => {
   const { tabId } = useParams();
   const selectedTabId = tabId || '';
   const { tabs } = useContext(TabsContext);

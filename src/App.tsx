@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 export const App = () => {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <>
@@ -20,16 +20,17 @@ export const App = () => {
             <Link
               to="/"
               className={cn('navbar-item', {
-                'is-active': location.pathname === '/',
+                'is-active': pathname === '/',
               })}
             >
               Home
             </Link>
+
             <Link
-              to="/tabs"
               className={cn('navbar-item', {
-                'is-active': location.pathname.startsWith('/tabs'),
+                'is-active': pathname.startsWith('/tabs'),
               })}
+              to="/tabs"
             >
               Tabs
             </Link>
