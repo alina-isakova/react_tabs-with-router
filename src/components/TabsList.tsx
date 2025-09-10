@@ -1,45 +1,38 @@
-import cn from 'classnames';
 import React, { useContext } from 'react';
 import { TabsContext } from '../store/TabsContext';
 import { Link, useParams } from 'react-router-dom';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+// import 'react-tabs/style/react-tabs.css';
 
-type Props = {};
+type Props = {
+  activeTabIndex: number | undefined;
+};
 
-export const TabsList: React.FC<Props> = () => {
-  const { tabId } = useParams();
-  const selectedTabId = tabId || '';
+export const TabsList: React.FC<Props> = ({ activeTabIndex }) => {
   const { tabs } = useContext(TabsContext);
-  const currentTab = tabs.find(tab => tab.id === selectedTabId) || null;
+  const { tabId } = useParams();
 
   return (
-    <div data-cy="TabsComponent">
-      <div className="tabs is-boxed">
-        <ul>
-          {tabs.map(tab => (
-            <li
-              className={cn({
-                'is-active': currentTab && tab?.id === currentTab?.id,
-              })}
-              data-cy="Tab"
-              key={tab.id}
-            >
-              <Link to={`/tabs/${tab.id}`} data-cy="TabLink">
-                {tab.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <Tabs defaultIndex={activeTabIndex === -1 ? 0 : activeTabIndex}>
+      <TabList className="tabs is-boxed">
+        {tabs.map(tab => (
+          <Tab
+            className={tab.id === tabId ? 'is-active' : ''}
+            data-cy="Tab"
+            key={tab.id}
+          >
+            <Link to={`/tabs/${tab.id}`} data-cy="TabLink">
+              {tab.title}
+            </Link>
+          </Tab>
+        ))}
+      </TabList>
 
-      {currentTab ? (
-        <div className="block" data-cy="TabContent">
-          {currentTab && currentTab.content}
-        </div>
-      ) : (
-        <div className="block" data-cy="TabContent">
-          Please select a tab
-        </div>
-      )}
-    </div>
+      {tabs.map(tab => (
+        <TabPanel key={tab.id} data-cy="TabContent">
+          {tabId === tab.id ? tab.content : 'Please select a tab'}
+        </TabPanel>
+      ))}
+    </Tabs>
   );
 };
